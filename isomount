@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# $Id: isomount 111 2022-07-19 14:32:43Z HMBJOrth $
+# $Id: isomount 113 2022-07-21 18:43:42Z HMBJOrth $
 # (c) 2022 Juergen Orth, Fujitsu
 #
 # Script for booting server with remote media ISO
@@ -190,7 +190,7 @@ then
 	echo Server is powered on or not reachable.
 	echo Please ensure to power off server before running this script.
 	echo Exiting
-	exit 1
+	exit 3
 else
 	echo "OK (off)"
 fi
@@ -199,10 +199,11 @@ fi
 if [ "0$(CheckRmSlots)" -gt 0 ]
 then	
 	echo -n "$(timestamp) Trying to mount $Uri ... "
-	MountISO $Uri | grep -q '^HTTP.*204' && echo successful || echo failed
+	MountISO $Uri | grep -q '^HTTP.*204' && echo successful || \
+		{ echo "failed! Exiting"; exit 4; }
 else
 	echo "$(timestamp) Remote media already mounted"
-	exit 1
+	exit 5
 fi
 
 # Set CD as next boot device (once)

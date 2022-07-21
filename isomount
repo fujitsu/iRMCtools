@@ -1,0 +1,220 @@
+#!/bin/bash
+#
+# $Id: isomount 111 2022-07-19 14:32:43Z HMBJOrth $
+# (c) 2022 Juergen Orth, Fujitsu
+#
+# Script for booting server with remote media ISO
+# Server should be shut down before!
+#
+# Be careful: This is a PROTOTYPE!!!
+#
+
+# read default params from CFG-File
+[ -r ${0}.cfg ] && . ${0}.cfg || { echo "No Configfile!"; exit 1; }
+
+##############################################################################
+# Don't change lines below!
+##############################################################################
+Proto=https
+RedfishBase=redfish/v1
+CurlOptions="-k -i --silent --noproxy $iRMC"
+LOGFILE=/tmp/${0##*/}-${iRMC}.log
+
+debug() {
+        if [ "$DEBUG" ]
+        then
+                [ "$1" ] &&  { debugtimestamp $* >> $LOGFILE; } || tee -a $LOGFILE
+        else
+                [ "$1" ] || cat
+        fi
+}
+
+timestamp() {
+	date '+%Y-%m-%d %H:%M:%S ---'
+}
+
+debugtimestamp() {
+	echo
+	echo "##########################################"
+	echo $(timestamp) $*
+}
+
+# Create JSON params from URI 
+MountParams() {	# URI
+	IsoUri="$1"
+	ShareType=${IsoUri%%:*}
+	ShareType=${ShareType^^}
+	IsoUri=${IsoUri#*://}
+	if  [[ $IsoUri =~ .*@.* ]]
+	then
+		Cred=${IsoUri%@*}
+		IsoUri=${IsoUri#*@}
+		if [[ $Cred =~ .*\;.* ]] 
+		then
+			UserDomain=${Cred%;*}
+			Cred=${Cred#*;}
+		fi
+		UserName=${Cred%:*}
+		Password=${Cred#*:}
+	fi
+	Server=${IsoUri%%/*}
+	IsoUri=${IsoUri#*/}
+	[[ $IsoUri =~ .*/.* ]] && ShareName=${IsoUri%/*}
+	ImageName=${IsoUri##*/}
+
+	echo "{"
+	echo '	"FTSVirtualMediaAction": "ConnectCD",'
+	for p in Server UserName Password UserDomain ShareType ShareName ImageName
+	do
+		if [ "$(eval echo \${$p})" ]
+		then
+			echo -ne "	"
+			eval echo -n \\\"$p\\\": \\\"\${$p}\\\"
+			[ "$p" = ImageName ] && echo || echo ","	
+		fi
+	done
+	echo "}"
+}
+
+# Check PowerState of Server
+ServerPoweredOn() {
+	cmd="curl $Proto://$iRMC/$RedfishBase/Chassis/0 \
+        -X GET -u $User:$Pw $CurlOptions"
+	debug ServerPoweredOn: $cmd
+	State=$($cmd |\
+	  debug |\
+	  awk '/^{/ { flag=1 } { if (flag) print }' | jq -r '.PowerState')
+	[ "$State" = "Off" ] && return 1 || return 0	
+}
+
+# Check if remote media can be mounted
+CheckRmSlots() {
+	cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Oem/ts_fujitsu/VirtualMedia \
+        -X GET -u $User:$Pw $CurlOptions"
+	debug CheckRmSlots: $cmd
+	$cmd |\
+	  debug |\
+	  awk '/^{/ { flag=1 } { if (flag) print }' | jq '.CDImage.NumberOfFreeDevices'
+}
+
+# Mount given ISO as remote media
+MountISO() { # ISOURI
+	Uri=$1
+        cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.VirtualMedia \
+		-H 'Accept: application/json' \
+		-H 'Content-type: application/json' \
+		-X POST -u $User:$Pw $CurlOptions -d "$(MountParams $Uri)"" 
+	debug MountIso: $cmd
+	curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.VirtualMedia \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X POST -u $User:$Pw $CurlOptions -d "$(MountParams $Uri)" | debug
+}
+
+# Unmount remote media
+UnMountISO() {
+        cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.VirtualMedia \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X POST -u $User:$Pw $CurlOptions -d '{"FTSVirtualMediaAction": "DisconnectCD"}'"
+	debug UnMountISO: $cmd
+        curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.VirtualMedia \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X POST -u $User:$Pw $CurlOptions -d '{"FTSVirtualMediaAction": "DisconnectCD"}' | debug
+}
+
+# Read current boot options
+GetBoot() {
+        cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Oem/ts_fujitsu/BootConfig \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X GET -u $User:$Pw $CurlOptions "
+	debug GetBoot: $cmd
+        curl $Proto://$iRMC/$RedfishBase/Systems/0/Oem/ts_fujitsu/BootConfig \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X GET -u $User:$Pw $CurlOptions | debug
+}
+
+# Set boot options to CD for one shot
+SetBoot() {
+        cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Oem/ts_fujitsu/BootConfig \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+		-H "If-Match":$(GetBoot|awk -F\" '/@odata.etag/ {print $(NF-1)}') \
+                -X PATCH -u $User:$Pw $CurlOptions \
+		-d '{ "BootDevice": "Cd", "NextBootOnlyEnabled": true }'"
+	debug SetBoot: $cmd
+        curl $Proto://$iRMC/$RedfishBase/Systems/0/Oem/ts_fujitsu/BootConfig \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+		-H "If-Match":$(GetBoot|awk -F\" '/@odata.etag/ {print $(NF-1)}') \
+                -X PATCH -u $User:$Pw $CurlOptions \
+		-d '{ "BootDevice": "Cd", "NextBootOnlyEnabled": true }' | debug
+}
+
+# Power server on
+PowerOnServer() {
+        cmd="curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.Reset \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X POST -u $User:$Pw $CurlOptions -d '{"FTSResetType": "PowerOn" }'"
+	debug ResetServer: $cmd
+        curl $Proto://$iRMC/$RedfishBase/Systems/0/Actions/Oem/FTSComputerSystem.Reset \
+                -H 'Accept: application/json' \
+                -H 'Content-type: application/json' \
+                -X POST -u $User:$Pw $CurlOptions -d '{"FTSResetType": "PowerOn" }' | debug
+}
+
+# For debugging
+# echo $Uri; MountParams $Uri; exit
+
+##############################################################################
+# Main program
+##############################################################################
+
+if [ "$DEBUG" ] 
+then
+	echo "$(timestamp) Info: Debug mode enabled. "
+	printf "                        %s\n" Logfile=$LOGFILE
+	printf "                        %s\n" iRMC=$iRMC User=$User
+	printf "                        %s\n" URI=$Uri
+fi
+
+type jq >/dev/null 2>&1 || { echo "Tool 'jq' is needed for this script!"; exit 2; }
+
+echo -n "$(timestamp) Checking Powerstate ... "
+if ServerPoweredOn 
+then
+	echo Server is powered on or not reachable.
+	echo Please ensure to power off server before running this script.
+	echo Exiting
+	exit 1
+else
+	echo "OK (off)"
+fi
+
+# Mount ISO as remote media
+if [ "0$(CheckRmSlots)" -gt 0 ]
+then	
+	echo -n "$(timestamp) Trying to mount $Uri ... "
+	MountISO $Uri | grep -q '^HTTP.*204' && echo successful || echo failed
+else
+	echo "$(timestamp) Remote media already mounted"
+	exit 1
+fi
+
+# Set CD as next boot device (once)
+echo -n "$(timestamp) Set boot device to ISO ... "
+SetBoot | grep -q '^HTTP.*200' && echo "successful" || echo failed
+
+# Power on server and let the update run
+echo "$(timestamp) Powering on server ..."
+PowerOnServer
+
+# When finished dismount ISO
+echo -n "Wait until update has finished and OS is up and running to unmount ISO image. Then press ENTER ... "
+read taste
+echo -n "$(timestamp) Unmount ISO ... "
+UnMountISO | grep -q '^HTTP.*204' && echo "successful" || echo failed

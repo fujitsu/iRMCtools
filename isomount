@@ -219,3 +219,4 @@ echo -n "Wait until update has finished and OS is up and running to unmount ISO 
 read taste
 echo -n "$(timestamp) Unmount ISO ... "
 UnMountISO | grep -q '^HTTP.*204' && echo "successful" || echo failed
+

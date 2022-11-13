@@ -25,12 +25,12 @@ To use this toolset run the following steps:
 ### 1. Clone the repository
 
 ```shell
-$ git clone https://github.com/JuergenOrth/iRMCtools.git
+$ git clone https://github.com/fujitsu/iRMCtools.git
 $ cd iRMCtools
 ```
 or extract this [ZIP file](https://github.com/JuergenOrth/iRMCtools/archive/refs/heads/master.zip).
 ```shell
-$ wget https://github.com/JuergenOrth/iRMCtools/archive/refs/heads/master.zip
+$ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
 $ unzip master.zip
 $ cd iRMCtools-master
 ```

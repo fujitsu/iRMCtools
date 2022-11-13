@@ -28,7 +28,7 @@ To use this toolset run the following steps:
 $ git clone https://github.com/fujitsu/iRMCtools.git
 $ cd iRMCtools
 ```
-or extract this [ZIP file](https://github.com/JuergenOrth/iRMCtools/archive/refs/heads/master.zip).
+or extract this [ZIP file](https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip).
 ```shell
 $ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
 $ unzip master.zip

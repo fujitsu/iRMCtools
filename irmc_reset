@@ -1,0 +1,8 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id:$
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+
+irmc_cmd post Managers/iRMC/Actions/Manager.Reset -i | head -1

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# $Id: irmc_login 135 2022-11-19 10:07:24Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+
+. ${0%/*}/.irmc_env
+
+irmc_cmd post SessionService/Sessions -d '{"UserName":"'$USER'","Password":"'$PASSWD'"}' -i | tee log | tr -d "" |  awk -F: '
+	/^X-Auth-Token/	{ token=$2}
+	/^{/ 		{ JSON=1; print "{ \"Token\":\""token"\","; next; }
+			{ if (JSON) print }' | \
+	jq -rj '"export session_token=\"",.Token,"\" session_id=",.Id,"\n"'

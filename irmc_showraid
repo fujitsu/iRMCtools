@@ -1,0 +1,55 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id: irmc_showraid 135 2022-11-19 10:07:24Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+
+indent() # level
+{
+	eval printf \" %.0s\" {1..$((4*$1))}
+}
+
+echo "#########################################################"
+echo "$(irmc_cmd get Systems/0 | jq -rj '.Model," ",.Name,"\n"') $iRMC"
+echo "#########################################################"
+
+irmc_cmd get Systems/0/Storage | jq -r '.Members[]."@odata.id"' | \
+while read ctrl
+do
+	echo
+	echo "Storage-Controller (${ctrl##*/}):"
+	indent 1
+	PRAID=${ctrl#*v1/}
+	irmc_cmd get $PRAID | jq -jr '.Name," ControllerNumber=",.StorageControllers[].Oem.ts_fujitsu.ControllerNumber," Status=",.Status.Health,"\n"'
+	indent 2
+	echo Disks:
+	irmc_cmd get $PRAID | jq -r '.Drives[]."@odata.id"' | while read disk
+	do
+		indent 3
+		irmc_cmd get ${disk#*v1/} | \
+			sed 's/"CapacityBytes":null/"CapacityBytes":0/' | jq -rj '
+				.Name,
+				" Size=",(.CapacityBytes?/1024/1024/1024|rint)," GiB",
+				" (",(.CapacityBytes?/1000/1000/1000|rint)," GB)",
+				" Status=",.Status.Health,"\n"'
+	done
+	indent 2
+	echo Volumes:
+	irmc_cmd get $PRAID | jq -r '.Volumes."@odata.id"' | while read volume
+	do
+		irmc_cmd get ${volume#*v1/} | jq -r '.Members[]."@odata.id"' | while read vol
+		do
+			indent 3
+			irmc_cmd get ${vol#*v1/} | jq -rj '.Name," (",.RAIDType,")", 
+				" Size=",(.CapacityBytes/1024/1024/1024|rint)," GiB",
+				" (",(.CapacityBytes/1000/1000/1000|rint)," GB)",
+				" Status=",.Status.Health,"\n"'
+			irmc_cmd get ${vol#*v1/} | jq -r '.Links.Drives[]."@odata.id"' | while read disk
+			do 
+				indent 4
+				echo "Disk number ${disk##*/}"
+			done
+		done
+	done
+done

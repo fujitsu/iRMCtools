@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# $Id: irmc_logout 135 2022-11-19 10:07:24Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+
+. ${0%/*}/.irmc_env
+
+irmc_cmd delete "SessionService/Sessions/$session_id"
+echo unset session_token session_id

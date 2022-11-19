@@ -38,7 +38,7 @@ $ cd iRMCtools-main
 Those tools start with "irmc_" in their script names.
 
 ### Config file:
-`.irc_env` contains defaults to make things more comfortable.
+`.irmc_env` contains defaults to make things more comfortable.
 ```shell
 # $Id: .irmc_env 134 2022-11-19 08:11:29Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools

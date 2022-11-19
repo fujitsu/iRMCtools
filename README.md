@@ -14,9 +14,10 @@ This toolset is provided W/O ANY WARRANTY and use at your own risk!
 This toolset is intended to be used in Linux environments. Alternatively it can be used in Windows environments with activated WSL (Windows Subsystem Linux) and installed Ubuntu or Debian for example from Microsoft Store. You can also use [Cygwin](https://cygwin.org) (In this case WSL is not needed).
 
 Following commands are required:
-- bash (including common tools like awk, sed, grep, ...)
-- curl (for talking with iRMC)
-- jq (for filtering of data from JSON output)
+- [bash](https://www.gnu.org/software/bash/) (including common tools like awk, sed, grep, ...)
+- [curl](https://curl.se/) (for talking with iRMC)
+- [jq](https://stedolan.github.io/jq/) (for filtering of data from JSON output)
+- optional [git](https://git-scm.com/) and/or [wget](https://www.gnu.org/software/wget/)
 
 ## Setup
 

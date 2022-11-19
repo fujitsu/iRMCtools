@@ -108,7 +108,7 @@ Connection to to 10.172.124.78 (via user/password) not possible (HTTP/1.1 401 Un
 
 * `irmc_logout`: Used for destroying an iRMC session and unsetting the session related ENV vars. Usage: `eval $(irmc_logout)`
 
-* `irmc_cmd`: Basic command to perfom Redfish tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. You use redfish_cmd w/ or w/o leading "/". You can also use the full name like "/redfish/v1/Systems/0". But, of course, it's less typing using only "Systems/0". Example: 
+* `irmc_cmd`: Basic command to perfom Redfish tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. You can use redfish_cmd w/ or w/o leading "/". You can also use the full name like "/redfish/v1/Systems/0". But, of course, it's less typing using only "Systems/0". Example: 
 ```shell
 * $ irmc_cmd get Systems/0
 {

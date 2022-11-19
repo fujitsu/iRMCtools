@@ -1,0 +1,45 @@
+# $Id: .irmc_env 134 2022-11-19 08:11:29Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+#
+#
+# Settings for iRMC tools based on bash and curl
+#
+
+# iRMC: IP Addr or name or FQDN of iRMC . Last entry wins ;-)
+iRMC=${iRMC:-10.172.124.78}
+
+# USER: iRMC User with appropriate rights (default: administrator)
+USER=${iRMC_CRED%:*}
+USER=${USER:-admin}                     # if iRMC_CRED not set use defaults
+
+# PASSWD: Password for above USER (default: admin)
+PASSWD=${iRMC_CRED#*:}
+PASSWD=${PASSWD:-${DCDEFAULTPW:-admin}} # if iRMC_CRED not set use defaults
+
+# CACERT: filename of CA file (doesn't matter if not existant)
+CACERT=${0%/*}/DCMA.crt
+
+# Debug files for troubleshooting
+HEADERFILE=/tmp/header.log	# HTTPS header
+REDFISHFILE=/tmp/redfish.log	# redfish commands
+OUTPUTFILE=/tmp/output.log	# redfish output
+
+# DEFAULTOPTIONS: add. options for curl. Can be changed according to network e.g. proxy settings
+DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
+
+##########################################################
+# Don't change lines below
+##########################################################
+
+# Get IP/FQDN for iRMC
+# IP needed for PW hash / FQDN might be needed for TLS
+if [[ "$iRMC" =~ ^[0-9]*\. ]] 
+then
+	iRMC_IP=$iRMC
+	iRMC_FQDN=$iRMC
+	host $iRMC >/dev/null && iRMC_FQDN=$(host $iRMC | awk '{print $NF}')
+else
+	host $iRMC >/dev/null && iRMC_IP=$(host $iRMC | awk '{print $NF}') || \
+		echo invalid fqdn: $iRMC
+	[ "$iRMC_IP" ] && iRMC_FQDN=$(host $iRMC | awk '{print $1}')
+fi

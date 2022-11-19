@@ -32,7 +32,7 @@ or extract this [ZIP file](https://github.com/fujitsu/iRMCtools/archive/refs/hea
 ```shell
 $ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
 $ unzip master.zip
-$ cd iRMCtools-master
+$ cd iRMCtools-main
 ```
 ## Toolset 1 (NIC infos, RAID infos):
 Those tools start with "irmc_" in their script names.
@@ -104,11 +104,11 @@ HTTP/1.1 401 Unauthorized
 Connection to to 10.172.124.78 (via user/password) not possible (HTTP/1.1 401 Unauthorized)
 ```
 
-* `irmc_login`: Used for initiating an iRMC session and setting of the required ENV vars `session_id` and `session_token`. Usage: `eval $(irmc_login)`
+* `irmc_login`: Used for initiating an iRMC session and setting of the required ENV vars `session_id` and `session_token`. Usage: `eval $(irmc_login)`. With an established session there is no need for authentication overhead when doing several requests in a row. The performance factor is up to two! 
 
 * `irmc_logout`: Used for destroying an iRMC session and unsetting the session related ENV vars. Usage: `eval $(irmc_logout)`
 
-* `irmc_cmd`: Basic command to perfom Redfish tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. Example: 
+* `irmc_cmd`: Basic command to perfom Redfish tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. You use redfish_cmd w/ or w/o leading "/". You can also use the full name like "/redfish/v1/Systems/0". But, of course, it's less typing using only "Systems/0". Example: 
 ```shell
 * $ irmc_cmd get Systems/0
 {
@@ -184,7 +184,7 @@ Storage-Controller (1):
                 Disk number 0
                 Disk number 1
 ```
-
+It's also possible to configure new volumes and so on. But those actions must be done with care to prevent data loss. In such cases you can run a command like `irmc_cmd post Systems/0/Storage/1/Volumes -d "@NewVolumeCreateSettings.json" -i | head -1`. Please check the Redfish API Spec v3.39, Chapter "CreateVolumes on volume collection", pages 111 and following.
 
 ## Toolset 2
 This tool is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with with image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
@@ -261,4 +261,6 @@ $ while read irmc user password
 >  echo "Processing $irmc ..."
 >  nohup isomount $irmc $user $password &
 > done < <inputfile>
+```
 
+Further links to documents / API specifications and so can you find [here](https://github.com/JuergenOrth/primergy).

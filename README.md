@@ -80,7 +80,7 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.
 
 ### Available commands:
-* `irmc_showenv`: Display the current environment: 
+* `irmc_showenv`: Display the current environment that is effective when running one of `irmc_xxx` scripts: 
 ```shell
 $ irmc_showenv
 iRMC:            10.172.124.78

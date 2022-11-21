@@ -187,6 +187,9 @@ Storage-Controller (1):
 ```
 It's also possible to configure new volumes and so on. But those actions must be done with care to prevent data loss. In such cases you can run a command like `irmc_cmd post Systems/0/Storage/1/Volumes -d "@NewVolumeCreateSettings.json" -i | head -1`. Please check the Redfish API Spec v3.39, Chapter "CreateVolumes on volume collection", pages 111 and following.
 
+* `irmc_showerror`: Display current error states of a server (Beta).
+* `irmc_reset`: Resets (reboots) iRMC immediatly.
+
 ## Toolset 2
 This tool is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with with image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
 

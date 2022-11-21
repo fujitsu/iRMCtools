@@ -1,0 +1,16 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id: irmc_showerror 141 2022-11-21 14:53:07Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+
+irmc_cmd get Chassis/0/Oem/ts_fujitsu/ComponentStatusOverview | tr -d '",' | awk -F: '
+	/SumStatus:/ { if ($2 == "Error") print $1 }' | while read component
+	do
+		irmc_cmd get Chassis/0/Oem/ts_fujitsu/ComponentStatus/${component/SumStatus/}s |\
+			jq -r '.Members[]."@odata.id"' | while read subcomponent
+				do
+					irmc_cmd get $subcomponent | jq -rj 'select(.SignalStatus=="Fail")|.Designation," ",.SignalStatus,"\n"'
+				done
+	done

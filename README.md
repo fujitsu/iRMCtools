@@ -92,7 +92,7 @@ session_id:
 session_token:
 ```
 
-* `irmc_chcon`: This command check if you can run Redfish commands.
+* `irmc_chcon`: This command checks if you can run Redfish commands.
 ```shell
 $ # Here OK
 $ irmc_chcon

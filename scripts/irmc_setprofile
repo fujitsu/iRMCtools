@@ -14,7 +14,7 @@ msg "Talking with iRMC $iRMC as user \"$USER\" ..."
 msg -n "Applying profile \"$JSON\" - please wait ..."
 
 sed -E '/\"IrmcConfig|\"BiosConfig/ a \\t"@Processing":"execute",' <$JSON >$JSON.$$
-ContentType="multipart/form-data" irmc_cmd post ${PMSACTION}ApplyProfile -F "data=@${1:-$JSON.$$}" || exit 2
+ContentType="multipart/form-data" irmc_cmd post ${PMSACTION}ApplyProfile -F "data=@$JSON.$$" || exit 2
 rm $JSON.$$
 
 TASK=$(tr -d "\r" <$HEADERFILE | awk -F: '/^Location/ {print $2}')

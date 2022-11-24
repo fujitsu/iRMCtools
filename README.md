@@ -27,13 +27,13 @@ To use this toolset run the following steps:
 
 ```shell
 $ git clone https://github.com/fujitsu/iRMCtools.git
-$ cd iRMCtools
+$ cd iRMCtools/scripts
 ```
 or extract this [ZIP file](https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip).
 ```shell
 $ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
 $ unzip master.zip
-$ cd iRMCtools-main
+$ cd iRMCtools-main/scripts
 ```
 ## Toolset 1 (NIC infos, RAID infos):
 Those tools start with "irmc_" in their script names.
@@ -189,8 +189,54 @@ It's also possible to configure new volumes and so on. But those actions must be
 
 * `irmc_showerror`: Display current error states of a server (Beta).
 * `irmc_reset`: Resets (reboots) iRMC immediatly.
+* `irmc_deltasks`: Delete all tasks (Beta).
+* `irmc_getprofile [profile [configfile]]`: Download iRMC- or BIOS-settings to file (Beta).
+```shell
+$ irmc_getprofile IrmcConfig/System
+2022-11-24 19:10:06 -- Talking with iRMC 10.172.124.82 as user "admin" ...
+2022-11-24 19:10:06 -- Removing existing profile "System" if necessary ...
+2022-11-24 19:10:08 -- Obtaining profile IrmcConfig/System ...
+2022-11-24 19:10:10 -- Waiting for completion of task 32 ... Status=OK
+2022-11-24 19:10:12 -- Downloading profile to file "profile.json" ...
+2022-11-24 19:10:13 -- Cleaning up ...
+
+$ cat profile.json
+{
+  "Server":{
+    "SystemConfig":{
+      "IrmcConfig":{
+        "System":{
+          "Location":"Unknown (edit \/etc\/snmp\/snmpd.conf)",
+          "Name":"rx2540m6-4-81.bupc-test.hmb.fsc.net",
+          "Description":"Server",
+          "Contact":"root@localhost",
+          "OperatingSystem":"VMware ESXi 7.0.3 build-19193900",
+          "AssetTag":"RX2540M6",
+          "RackName":"- unknown -",
+          "ChassisHostname":"- unknown -",
+          "HelpdeskMessage":""
+        },
+        "@Version":"1.07"
+      }
+    },
+    "@Version":"1.01"
+  }
+}
+
+```
+* `irmc_setprofile [configfile]`: Upload iRMC- or BIOS-settings from file (Beta).
+```shell
+$ irmc_setprofile profile.json
+2022-11-24 19:11:24 -- Talking with iRMC 10.172.124.82 as user "admin" ...
+2022-11-24 19:11:24 -- Applying profile "profile.json" - please wait ...
+2022-11-24 19:11:26 -- Waiting for completion of task 33 ... Status=OK
+2022-11-24 19:11:32 -- Cleaning up ...
+
+```
+* `irmc_sso`: Open 3 browser windows with AVR, GUI and Systemreport (Beta).
 
 ## Toolset 2
+(below dir `iso`)
 This tool is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with with image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
 
 ###  Edit the configfile

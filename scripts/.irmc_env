@@ -27,7 +27,10 @@ JSONFILE=profile.json		# Default output file for profiles
 
 # DEFAULTOPTIONS: add. options for curl. Can be changed according to network e.g. proxy settings
 DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
+# DEFAULT Content-Type - must be overwritten for some POST requests
 ContentType=${ContentType:-"application/JSON"}
+# DEFAULT Browser for irmc_sso
+BROWSER=ff
 
 ##########################################################
 # Don't change lines below

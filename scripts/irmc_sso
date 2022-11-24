@@ -1,13 +1,10 @@
 #!/bin/bash
 # (c) Juergen Orth ;-)
-# $Id: irmc_sso 142 2022-11-24 17:38:35Z HMBJOrth $
+# $Id: irmc_sso 144 2022-11-24 18:22:59Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 
 export PATH=$PATH:${0%/*}
 . ${0%/*}/.irmc_env
-
-export BROWSER="/cygdrive/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
-export BROWSER=ff
 
 SESSION=$(irmc_cmd post SessionService/Actions/Oem/FTSSessionService.CreateSSOSession \
 	-d '{"RoleId": "Operator", "UseVideoRedirection": true, "UseRemoteStorage": false}' | \

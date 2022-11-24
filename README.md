@@ -190,7 +190,7 @@ It's also possible to configure new volumes and so on. But those actions must be
 * `irmc_showerror`: Display current error states of a server (Beta).
 * `irmc_reset`: Resets (reboots) iRMC immediatly.
 * `irmc_deltasks`: Delete all tasks (Beta).
-* `irmc_getprofile [profile [configfile]]`: Download iRMC- or BIOS-settings to file (Beta).
+* `irmc_getprofile [profile [configfile]]`: Download iRMC- or BIOS-settings to file (Beta). **Please see this [document Page 7, yellow marked](https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf)** for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
 ```shell
 $ irmc_getprofile IrmcConfig/System
 2022-11-24 19:10:06 -- Talking with iRMC 10.172.124.82 as user "admin" ...
@@ -224,7 +224,7 @@ $ cat profile.json
 }
 
 ```
-* `irmc_setprofile [configfile]`: Upload iRMC- or BIOS-settings from file (Beta).
+* `irmc_setprofile [configfile]`: Upload iRMC- or BIOS-settings from file (Beta). **Please see this [document Page 7, yellow marked](https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf)** for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
 ```shell
 $ irmc_setprofile profile.json
 2022-11-24 19:11:24 -- Talking with iRMC 10.172.124.82 as user "admin" ...

@@ -35,7 +35,7 @@ $ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
 $ unzip master.zip
 $ cd iRMCtools-main/scripts
 ```
-## Toolset 1 (NIC infos, RAID infos):
+## Toolset 1 (NIC infos, RAID infos, Profile Management, ...):
 Those tools start with "irmc_" in their script names.
 
 ### Config file:

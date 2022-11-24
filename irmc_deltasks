@@ -1,0 +1,15 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id: irmc_deltasks 142 2022-11-24 17:38:35Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+. ${0%/*}/.irmc_env
+
+irmc_cmd get TaskService/Tasks | jq -r '.Members[]."@odata.id"' | while read task
+do
+	msg -n "Deleting task ${task##*/} ... "
+	irmc_cmd delete $task >/dev/null
+	echo done
+done
+

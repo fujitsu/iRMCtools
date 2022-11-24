@@ -1,6 +1,6 @@
 #!/bin/bash
 # (c) Juergen Orth ;-)
-# $Id: irmc_cmd 135 2022-11-19 10:07:24Z HMBJOrth $
+# $Id: irmc_cmd 142 2022-11-24 17:38:35Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 
 export PATH=$PATH:${0%/*}
@@ -30,7 +30,7 @@ else
 	# w/o Session ID = One Time Authorization
 	AUTH="-u $USER:$PASSWD"
 fi
-curl "https://$iRMC/redfish/v1/$CMD" -X ${METHOD^^} $AUTH -H "Content-Type: application/JSON; charset=UTF-8" $CERTOPT $DEFAULTOPTIONS "$@" | $CAT
+curl "https://$iRMC/redfish/v1/$CMD" -X ${METHOD^^} $AUTH -H "Content-Type: $ContentType; charset=UTF-8" $CERTOPT $DEFAULTOPTIONS "$@" | $CAT
 echo
 result=$(head -1 $HEADERFILE)
 [[ "$result" =~ 2[0-9][0-9] ]] || { echo $result >&2; exit 1; }

@@ -1,4 +1,4 @@
-# $Id: .irmc_env 134 2022-11-19 08:11:29Z HMBJOrth $
+# $Id: .irmc_env 142 2022-11-24 17:38:35Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 #
 #
@@ -23,9 +23,11 @@ CACERT=${0%/*}/DCMA.crt
 HEADERFILE=/tmp/header.log	# HTTPS header
 REDFISHFILE=/tmp/redfish.log	# redfish commands
 OUTPUTFILE=/tmp/output.log	# redfish output
+JSONFILE=profile.json		# Default output file for profiles
 
 # DEFAULTOPTIONS: add. options for curl. Can be changed according to network e.g. proxy settings
 DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
+ContentType=${ContentType:-"application/JSON"}
 
 ##########################################################
 # Don't change lines below
@@ -43,3 +45,53 @@ else
 		echo invalid fqdn: $iRMC
 	[ "$iRMC_IP" ] && iRMC_FQDN=$(host $iRMC | awk '{print $1}')
 fi
+
+# Some helper functions
+
+# Repeat char count times
+repeat() # count char
+{
+	printf "%${1}s" " " | tr " " "$2"
+}
+
+# Indent to level level
+indent() # level [blanks_per_level] 
+{
+	repeat $(( $1 * ${2:-4} )) " "
+}
+
+# Draw a line with length count and opt. using char
+line() # count [char]
+{
+	repeat $1 "${2:--}"
+}
+
+# Display timestamp and params
+showinfo() # [param ...]
+{
+	[ "$1" = "-n" ] && { nl=" ";shift;} || nl="\n"
+        msg=$(date "+%Y-%m-%d %H:%M:%S -- $*")
+	printf "%s$nl" "$msg"
+}
+
+# Output a message on stdout
+msg() # [param ...]
+{
+        showinfo $@
+}
+
+# Output an error message on stderr and exit with gven rc
+error() # rc [param ...]
+{
+        rc=$1
+        shift
+        showinfo $@ >&2
+        exit $rc
+}
+
+# Display debug info to stderr when debuglevel is appropriate
+debugmsg()
+{
+        [ $1 -le $DEBUGLEVEL ] && msg debug $@ >&2
+}
+

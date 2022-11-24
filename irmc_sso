@@ -1,0 +1,59 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id: irmc_sso 142 2022-11-24 17:38:35Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+. ${0%/*}/.irmc_env
+
+export BROWSER="/cygdrive/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+export BROWSER=ff
+
+SESSION=$(irmc_cmd post SessionService/Actions/Oem/FTSSessionService.CreateSSOSession \
+	-d '{"RoleId": "Operator", "UseVideoRedirection": true, "UseRemoteStorage": false}' | \
+		jq -rj '"RfSessToken=",."X-Auth-Token","&SessId=",.Id')
+
+for cmd in login report.xml viewer.html
+do
+	$BROWSER "$iRMC/$cmd?$SESSION"
+done
+
+exit
+
+
+
+#!/bin/bash
+iRMC=${1:-10.172.124.225} USER=${2:-admin} PW=${3:-pccpcc}
+export BROWSER="/cygdrive/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+export BROWSER=ff
+
+#set -x
+getsessionid() # IP USER PW
+{
+	curl -s -u $2:$3 -H 'Accept: application/json' -H 'Content-type: application/json' \
+		-d '{"RoleId": "Operator", "UseVideoRedirection": true, "UseRemoteStorage": false}' -k -i \
+		-X POST "https://${1}/redfish/v1/SessionService/Actions/Oem/FTSSessionService.CreateSSOSession" |\
+	       	tee ${0%/*}/session.log | tr -d ":," | awk -F'"' '
+			$2=="Id"       { id=$3 }
+                        /X-Auth-Token/ { printf("%s&SessId=%d",$4,id) }'
+}
+
+case ${0##*/} in
+	avr)  command=viewer.html;;
+	rep*) command=report.xml;;
+	gui)  command=login;;
+	sso)  command="viewer.html report.xml login"
+esac
+
+for cmd in $command
+do
+	"$BROWSER" https://${iRMC}/${cmd}?RfSessToken="$(getsessionid $iRMC $USER $PW)"
+done
+
+
+${0%/*}
+$ rp SessionService/Actions/Oem/FTSSessionService.CreateSSOSession -d '{"RoleId": "Operator", "UseVideoRedirection": true, "UseRemoteStorage": false}'|jq -rj '"RfSessToken=",."X-Auth-Token","&SessId=",.Id'
+RfSessToken=7HS6jx+b3c+pTa0r&SessId=1
+HMBJOrth@G02DEXN04899 ~/bin/irmcredfish
+$ ff "https://10.172.124.82/login?RfSessToken=7HS6jx+b3c+pTa0r&SessId=1"
+

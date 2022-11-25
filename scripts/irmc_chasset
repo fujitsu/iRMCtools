@@ -1,0 +1,17 @@
+#!/bin/bash
+# (c) Juergen Orth ;-)
+# $Id: irmc_chasset 146 2022-11-25 08:43:37Z HMBJOrth $
+# for documentation see https://github.com/fujitsu/iRMCtools
+
+export PATH=$PATH:${0%/*}
+. ${0%/*}/.irmc_env
+
+[ "$1" ] || error 1 "Usage: ${0##*/} new Asset Tag"
+
+OLD=/tmp/assetold.json
+NEW=/tmp/assetnew.json
+
+irmc_getprofile IrmcConfig/System $OLD
+msg "Changing AssetTat to \"$*\""
+jq ".Server.SystemConfig.IrmcConfig.System.AssetTag=\"$*\"" <$OLD >$NEW
+irmc_setprofile $NEW

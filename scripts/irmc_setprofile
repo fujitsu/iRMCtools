@@ -1,6 +1,6 @@
 #!/bin/bash
 # (c) Juergen Orth ;-)
-# $Id: irmc_setprofile 142 2022-11-24 17:38:35Z HMBJOrth $
+# $Id: irmc_setprofile 145 2022-11-24 19:45:03Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 
 export PATH=$PATH:${0%/*}

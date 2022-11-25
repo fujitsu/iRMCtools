@@ -13,7 +13,10 @@ JSON=${1:-$JSONFILE}
 msg "Talking with iRMC $iRMC as user \"$USER\" ..."
 msg -n "Applying profile \"$JSON\" - please wait ..."
 
-sed -E '/\"IrmcConfig|\"BiosConfig/ a \\t"@Processing":"execute",' <$JSON >$JSON.$$
+# sed -E '/\"IrmcConfig|\"BiosConfig/ a \\t"@Processing":"execute",' <$JSON >$JSON.$$
+sed -E '/\"Server\"/ a \ \ \ \ "@Processing":"execute",
+        /\"BiosConfig\"/ a \\t"@InhibitReboot": true,' <$JSON >$JSON.$$
+
 ContentType="multipart/form-data" irmc_cmd post ${PMSACTION}ApplyProfile -F "data=@$JSON.$$" || exit 2
 rm $JSON.$$
 

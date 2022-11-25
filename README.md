@@ -92,15 +92,15 @@ session_id:
 session_token:
 ```
 
-* `irmc_chcon`: This command checks if you can run Redfish commands.
+* `irmc_ckcon`: This command checks if you can run Redfish commands.
 ```shell
 $ # Here OK
-$ irmc_chcon
+$ irmc_ckcon
 Connection to 10.172.124.78 (via user/password) OK
 
 $ iRMC_CRED=admin:IdontKnow
 $ # Here: Error
-$ irmc_chcon
+$ irmc_ckcon
 HTTP/1.1 401 Unauthorized
 Connection to to 10.172.124.78 (via user/password) not possible (HTTP/1.1 401 Unauthorized)
 ```
@@ -234,6 +234,8 @@ $ irmc_setprofile profile.json
 
 ```
 * `irmc_sso`: Open 3 browser windows with AVR, GUI and Systemreport (Beta).
+* `irmc_chasset newassettag`: Change the asset tag.
+* `irmc_chbios true|false`: Change the automatic update feature for BIOS settings at boot time. When this is set to *true* (and effective after first reboot) then you can read BIOS-settings with `irmc_getprofile` w/o immediate server reset!
 
 ## Toolset 2
 (below dir `iso`)

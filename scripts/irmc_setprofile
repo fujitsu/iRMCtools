@@ -1,6 +1,6 @@
 #!/bin/bash
 # (c) Juergen Orth ;-)
-# $Id: irmc_setprofile 145 2022-11-24 19:45:03Z HMBJOrth $
+# $Id: irmc_setprofile 149 2022-11-25 18:18:17Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 
 export PATH=$PATH:${0%/*}
@@ -13,7 +13,6 @@ JSON=${1:-$JSONFILE}
 msg "Talking with iRMC $iRMC as user \"$USER\" ..."
 msg -n "Applying profile \"$JSON\" - please wait ..."
 
-# sed -E '/\"IrmcConfig|\"BiosConfig/ a \\t"@Processing":"execute",' <$JSON >$JSON.$$
 sed -E '/\"Server\"/ a \ \ \ \ "@Processing":"execute",
         /\"BiosConfig\"/ a \\t"@InhibitReboot": true,' <$JSON >$JSON.$$
 

@@ -1,4 +1,4 @@
-# $Id: .irmc_env 142 2022-11-24 17:38:35Z HMBJOrth $
+# $Id: .irmc_env 144 2022-11-24 18:22:59Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 #
 #
@@ -28,7 +28,7 @@ JSONFILE=profile.json		# Default output file for profiles
 # DEFAULTOPTIONS: add. options for curl. Can be changed according to network e.g. proxy settings
 DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 # DEFAULT Content-Type - must be overwritten for some POST requests
-ContentType=${ContentType:-"application/JSON"}
+ContentType=${ContentType:-"application/JSON; charset=UTF-8"}
 # DEFAULT Browser for irmc_sso
 BROWSER=ff
 

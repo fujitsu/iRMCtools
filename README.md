@@ -314,5 +314,36 @@ $ while read irmc user password
 >  nohup isomount $irmc $user $password &
 > done < <inputfile>
 ```
+## Toolset 3
+(below dir `uhl`)
+This tool is mentioned to configure USB Host Lan which allows you access to iRMC webserver from host even with no iRMC LAN jack mounted. After enabling USB Host Lan you have to setup your host LAN interface accordingly (e.g. with nmcli).
 
-Further links to documents / API specifications and so can you find [here](https://github.com/JuergenOrth/primergy).
+Usage: `uhl [off|on [netmask [bmcaddr [hostaddr]]]]`
+
+Example:
+```shell
+[root@Wrangler bin]# uhl
+status:    off
+netmask:   255.255.255.0
+bmcaddr:   169.254.0.2
+hostaddr:  169.254.0.1
+[root@Wrangler bin]# uhl on 255.255.0.0
+[root@Wrangler bin]# uhl
+status:    on
+netmask:   255.255.0.0
+bmcaddr:   169.254.0.2
+hostaddr:  169.254.0.1
+[root@Wrangler bin]# irmc_cmd get Systems
+{
+  "@odata.id":"\/redfish\/v1\/Systems",
+  "@odata.type":"#ComputerSystemCollection.ComputerSystemCollection",
+  "Name":"Computer System Collection",
+  "Members":[
+    {
+      "@odata.id":"\/redfish\/v1\/Systems\/0"
+      :
+      :
+```
+
+
+Further links to documents / API specifications and so on can you find [here](https://github.com/JuergenOrth/primergy).

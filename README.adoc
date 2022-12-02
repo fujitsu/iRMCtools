@@ -137,7 +137,8 @@ $ irmc_cmd get Systems/0
 :
 ```
 * `irmc_shownic`: Display NIC (Network Interface Controller) related information.
-```shell
+[source,shell]
+----
 $ irmc_shownic
 #########################################################
 PRIMERGY RX2540 M6 rx2540m6-4-81.bupc-test.hmb.fsc.net 10.172.124.82
@@ -165,7 +166,7 @@ PLAN CP I350-T4 4X 1000BASE-T OCPv3       OCP : 1
 PLAN EP X710-DA2 2x10Gb SFP               PCI Slot : 1
 PFC EP LPe31002                           PCI Slot : 7
 PLAN EP X710-DA2 2x10Gb SFP               PCI Slot : 5
-```
+----
 * `irmc_showraid`: Display storage controllers and respective RAID configuration:
 [source,shell]
 ----

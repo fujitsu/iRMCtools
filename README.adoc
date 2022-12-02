@@ -248,8 +248,7 @@ $ irmc_setprofile profile.json
 * `irmc_chbios true|false`: Change the automatic update feature for BIOS settings at boot time. When this is set to *true* (and effective after first reboot) then you can read BIOS-settings with `irmc_getprofile` w/o immediate server reset!
 
 == Toolset 2 - use remote media via CLI
-(below dir `iso`)
-This tool is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with with image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
+This tool (below dir `iso`) is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with this image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
 
 ===  Config file
 

@@ -46,7 +46,8 @@ Those tools below dir `scripts` start with "irmc_" in their script names.
 
 === Config file
 `.irmc_env` contains defaults to make things more comfortable.
-```shell
+[source,shell]
+----
 # $Id: .irmc_env 134 2022-11-19 08:11:29Z HMBJOrth $
 # for documentation see https://github.com/fujitsu/iRMCtools
 #
@@ -75,7 +76,7 @@ OUTPUTFILE=/tmp/output.log      # redfish output
 
 # DEFAULTOPTIONS: add. options for curl. Can be changed according to network e.g. proxy settings
 DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
-```
+----
 
 === Used ENV vars
 * `iRMC`: IP-address, name or FQDN of iRMC

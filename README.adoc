@@ -87,7 +87,7 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.
 
 === Commands
-* `irmc_showenv`: Display the current environment that would be effective when running one of `irmc_xxx` scripts: 
+==== `irmc_showenv`: Display the current environment that would be effective when running one of `irmc_xxx` scripts: 
 ```shell
 $ irmc_showenv
 iRMC:            10.172.124.78
@@ -99,7 +99,7 @@ session_id:
 session_token:
 ```
 
-* `irmc_ckcon`: This command checks if you can run Redfish commands.
+==== `irmc_ckcon`: This command checks if you can run Redfish commands.
 ```shell
 $ # Example when OK
 $ irmc_ckcon

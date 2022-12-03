@@ -115,7 +115,7 @@ Connection to to 10.172.124.78 (via user/password) not possible (HTTP/1.1 401 Un
 ```
 
 ==== `irmc_login`
-Used for initiating an iRMC session and setting of the required ENV vars `session_id` and `session_token`. Usage: `eval $(irmc_login)`. With an established session there is no need for authentication overhead when doing several requests in a row. The performance factor is up to two! 
+Used for initiating an iRMC session and setting of the required ENV vars `session_id` and `session_token`. Usage: `eval $(irmc_login)`. With an established session there is no need for authentication overhead when doing several requests in a row. The performance factor is up to two! Please notice that sessions expire after 5 minutes of inactivity!
 
 ==== `irmc_logout`
 Used for destroying an iRMC session and unsetting the session related ENV vars. Usage: `eval $(irmc_logout)`

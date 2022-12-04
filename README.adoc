@@ -37,7 +37,7 @@ Clone the repository:
 $ git clone https://github.com/fujitsu/iRMCtools.git
 $ cd iRMCtools
 ----
-or extract this https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip[ZIP file] e.g. with `wget` or with your internet browser.
+or download this https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip[ZIP file] e.g. with `wget` or with your internet browser and unzip it.
 [source,shell]
 ----
 $ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip

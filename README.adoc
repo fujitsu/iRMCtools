@@ -4,7 +4,7 @@
 = iRMCtools
 
 [.lead]
-*Tools and examples based on (https://www.dmtf.org/standards/redfish)[Redfish(R)] for Fujitsu iRMC*
+*Tools and examples based on (https://www.dmtf.org/standards/redfish/)[Redfish(R)] for Fujitsu iRMC*
 
 Here are some scripts/examples to automate tasks regarding iRMC (integrated Remote Management Controller) of Fujitsu https://www.fujitsu.com/global/products/computing/servers/primergy/[PRIMERGY servers].
  

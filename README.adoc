@@ -82,7 +82,9 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 === Used ENV vars
 * `iRMC`: IP-address, name or FQDN of iRMC
 * `iRMC_CRED`: User credentials in format `user:password`  
-  If this vars are not set like `export iRMC=10.11.12.13` or used like `iRMC=_irmcdbserver3_ iRMC_CRED=_admin_:__admin__ irmc_ckcon` for example then defaults from file `.irmc_env` are taken.
+  If this vars are not set like `export iRMC=10.11.12.13` or used like 
+   iRMC=_irmcdbserver3_ iRMC_CRED=_admin_:__admin__ irmc_ckcon
+  for example then defaults from file `.irmc_env` are taken.
 * `session_id` and `session_token`: These vars are used to handle iRMC sessions. They should be set/unset with commands like `eval $(irmc_login)` or `eval $(irmc_logout)`.
 * `DEBUG`: If set (e.g. `export DEBUG=1`) the scripts will output all commands to `stderr`. Additional all native redfish commands are logged to `$REDFISHFILE` which is defined in `.irmc_env`, too.
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.
@@ -217,7 +219,7 @@ Delete all tasks (Beta).
 ==== `irmc_getprofile [profile [configfile]]`
 Download iRMC- or BIOS-settings to file (Beta). You can download either the complete `IrmcConfig`` or the `BiosConfig`` or a subtree like `IrmcConfig/System/AssetTag` of it.
 
-WARNING: *#Please see this https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf[document Page 7, yellow marked]#* for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
+WARNING: *#Please see this https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf[document] (Page 7, yellow marked)#* for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
 [source,shell]
 ----
 $ irmc_getprofile IrmcConfig/System
@@ -255,7 +257,7 @@ $ cat profile.json
 ==== `irmc_setprofile [configfile]`
 Upload iRMC- or BIOS-settings from file (Beta). 
 
-WARNING: *#Please see this https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf[document Page 7, yellow marked]#* for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
+WARNING: *#Please see this https://github.com/fujitsu/iRMC-REST-API/blob/main/docs/iRMC_RESTful_Tools_EN.pdf[document] (Page 7, yellow marked)#* for hints to prevent unintended resets and/or data loss even if this document belongs to the RESTful API!
 [source,shell|
 ----
 $ irmc_setprofile profile.json
@@ -384,4 +386,4 @@ hostaddr:  169.254.0.1
       :
       :
 ----
-Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/primergy[here].
+Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/PRIMERGY[here].

@@ -82,7 +82,7 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 === Used ENV vars
 * `iRMC`: IP-address, name or FQDN of iRMC
 * `iRMC_CRED`: User credentials in format `user:password`  
-  If this vars are not set like `export iRMC=10.11.12.13` then defaults from file `.irmc_env` are taken.
+  If this vars are not set like `export iRMC=10.11.12.13` or used like `iRMC_CRED=_admin_:___admin__ irmc_ckcon` for example then defaults from file `.irmc_env` are taken.
 * `session_id` and `session_token`: These vars are used to handle iRMC sessions. They should be set/unset with commands like `eval $(irmc_login)` or `eval $(irmc_logout)`.
 * `DEBUG`: If set (e.g. `export DEBUG=1`) the scripts will output all commands to `stderr`. Additional all native redfish commands are logged to `$REDFISHFILE` which is defined in `.irmc_env`, too.
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.
@@ -268,10 +268,10 @@ $ irmc_setprofile profile.json
 Open 3 browser windows with AVR, GUI and Systemreport (Beta).
 
 ==== `irmc_chasset newassettag`
-Change the asset tag.
+Change the asset tag, e.g. `chasset ASSET-No: 4711/0815`
 
 ==== `irmc_chbios true|false`
-Change the automatic update feature for BIOS settings at boot time. When this is set to *true* (and effective after first reboot) then you can read BIOS-settings with `irmc_getprofile` w/o immediate server reset!
+Change the automatic update feature for BIOS settings at boot time. When this is set to *true* (and effective after first reboot) then you can read BIOS-settings with `irmc_getprofile` w/o immediate server reset! Default value ex factory is `false`.
 
 == Toolset 2 - use remote media via CLI
 This tool (below dir `iso`) is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with this image. This can be used for OS installation as well as for applying Fujitsu Update DVD.

@@ -82,7 +82,7 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 === Used ENV vars
 * `iRMC`: IP-address, name or FQDN of iRMC
 * `iRMC_CRED`: User credentials in format `user:password`  
-  If this vars are not set like `export iRMC=10.11.12.13` or used like `iRMC_CRED=_admin_:___admin__ irmc_ckcon` for example then defaults from file `.irmc_env` are taken.
+  If this vars are not set like `export iRMC=10.11.12.13` or used like `iRMC=_irmcdbserver3_ iRMC_CRED=_admin_:__admin__ irmc_ckcon` for example then defaults from file `.irmc_env` are taken.
 * `session_id` and `session_token`: These vars are used to handle iRMC sessions. They should be set/unset with commands like `eval $(irmc_login)` or `eval $(irmc_logout)`.
 * `DEBUG`: If set (e.g. `export DEBUG=1`) the scripts will output all commands to `stderr`. Additional all native redfish commands are logged to `$REDFISHFILE` which is defined in `.irmc_env`, too.
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.

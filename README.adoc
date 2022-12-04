@@ -86,7 +86,7 @@ DEFAULTOPTIONS=" -D $HEADERFILE --silent --noproxy $iRMC"
 * `iRMC_CRED`: User credentials in format `user:password`  
   If this vars are not set like `export iRMC=10.11.12.13` or used like `iRMC=_irmcdbserver3_ iRMC_CRED=_admin_:__admin__ irmc_ckcon` for example then defaults from file `.irmc_env` are taken.
 * `session_id` and `session_token`: These vars are used to handle iRMC sessions. They should be set/unset with commands like `eval $(irmc_login)` or `eval $(irmc_logout)`.
-* `DEBUG`: If set (e.g. `export DEBUG=1`) the scripts will output all commands to `stderr`. Additional all native redfish commands are logged to `$REDFISHFILE` which is defined in `.irmc_env`, too.
+* `DEBUG`: If set (e.g. `export DEBUG=1`) the scripts will output all commands to `stderr`. Additional all native Redfish(R) commands are logged to `$REDFISHFILE` which is defined in `.irmc_env`, too.
 * `WARNING`: If set a warning message appears when https data is not confirmed by certificate.
 
 === Commands
@@ -104,7 +104,7 @@ session_token:
 ```
 
 ==== `irmc_ckcon`
-This command checks if you can run Redfish commands.
+This command checks if you can run Redfish(R) commands.
 ```shell
 $ # Example when OK
 $ irmc_ckcon
@@ -124,7 +124,7 @@ Used for initiating an iRMC session and setting of the required ENV vars `sessio
 Used for destroying an iRMC session and unsetting the session related ENV vars. Usage: `eval $(irmc_logout)`
 
 ==== `irmc_cmd`
-Basic command to perfom Redfish tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. You can use redfish_cmd w/ or w/o leading "/". You can also use the full name like "/redfish/v1/Systems/0". But, of course, it's less typing using only "Systems/0". Example: 
+Basic command to perfom Redfish(R) tasks: Usage: `irmc_cmd get|post|patch|delete redfish_cmd [other options ..]`. You can use redfish_cmd w/ or w/o leading "/". You can also use the full name like "/redfish/v1/Systems/0". But, of course, it's less typing using only "Systems/0". Example: 
 [source,shell]
 ----
 $ irmc_cmd get Systems/0
@@ -329,7 +329,7 @@ For evaluation purposes it is possible to run `isomount` in debug mode. For this
 ```shell
 $ export DEBUG=1
 ```
-If debugging is enabled all Redfish calls and outputs are loggend in file `/tmp/isomount-<$iRMC>.log`. Disable debugging with:
+If debugging is enabled all Redfish(R) calls and outputs are loggend in file `/tmp/isomount-<$iRMC>.log`. Disable debugging with:
 ```shell
 $ unset DEBUG
 ```
@@ -386,4 +386,6 @@ hostaddr:  169.254.0.1
       :
       :
 ----
+
+'''
 Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/PRIMERGY[here].

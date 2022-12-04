@@ -4,7 +4,7 @@
 = iRMCtools
 
 [.lead]
-*Tools and examples based on (https://www.dmtf.org/standards/redfish/)[Redfish(R)] for Fujitsu iRMC*
+*Tools and examples based on https://www.dmtf.org/standards/redfish[Redfish(R)] for Fujitsu iRMC*
 
 Here are some scripts/examples to automate tasks regarding iRMC (integrated Remote Management Controller) of Fujitsu https://www.fujitsu.com/global/products/computing/servers/primergy/[PRIMERGY servers].
  
@@ -25,6 +25,8 @@ Following commands are required:
 * https://stedolan.github.io/jq/[jq] (for filtering/processing of JSON data)
 
 * optional https://git-scm.com/[git] and/or https://www.gnu.org/software/wget/[wget]
+
+Normally you can install them by using your OS' paket manager e.g. `yum` or `apt`.
 
 === Setup
 To use this toolset run the following steps:

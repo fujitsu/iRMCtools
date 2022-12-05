@@ -397,4 +397,4 @@ hostaddr:  169.254.0.1
 ----
 
 '''
-Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/PRIMERGY[here].
+NOTE: Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/PRIMERGY[here].

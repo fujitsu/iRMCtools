@@ -7,7 +7,7 @@ ifdef::env-github[]
 :important-caption: :heavy_exclamation_mark:
 :caution-caption: :fire:
 :warning-caption: :warning:
-:imagedir: https://github.com/fujitsu/iRMCtools/tree/main/img/
+:imagedir: img/
 endif::[]
 = iRMCtools
 
@@ -279,7 +279,7 @@ $ irmc_setprofile profile.json
 ==== `irmc_sso`
 Open 3 browser windows with AVR, GUI and Systemreport (Beta).
 
-image::SSO_Screenshot.png[]
+image::SSO_Screenshot.png[SSO: AVR, GUI, SystemReport]
 
 ==== `irmc_chasset newassettag`
 Change the asset tag, e.g. `chasset ASSET-No: 4711/0815`

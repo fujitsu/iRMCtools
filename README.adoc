@@ -1,5 +1,6 @@
 :author: Jürgen Orth
 :email: Juergen.Orth@fujitsu.com
+:imagedir: https://github.com/fujitsu/iRMCtools/blob/main/img/
 :toc: preamble
 ifdef::env-github[]
 :tip-caption: :bulb:

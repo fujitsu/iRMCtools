@@ -50,7 +50,7 @@ $ cd iRMCtools
 or download this https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip[ZIP file] e.g. with `wget` or with your internet browser and unzip it.
 [source,shell]
 ----
-$ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip <1> (1)
+$ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip # <1>
 $ unzip master.zip
 $ cd iRMCtools-main
 ----

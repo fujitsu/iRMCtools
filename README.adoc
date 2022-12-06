@@ -50,10 +50,12 @@ $ cd iRMCtools
 or download this https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip[ZIP file] e.g. with `wget` or with your internet browser and unzip it.
 [source,shell]
 ----
-$ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip
+$ wget https://github.com/fujitsu/iRMCtools/archive/refs/heads/master.zip <1>
 $ unzip master.zip
 $ cd iRMCtools-main
 ----
+<1> You can also use `curl -sLo master.zip https://github...`
+
 == Toolset 1 - NIC & RAID infos, Profile Management, iRMC reset, ...
 Those tools below dir `scripts` start with "irmc_" in their script names.
 

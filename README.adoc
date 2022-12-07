@@ -225,7 +225,7 @@ It's also possible to configure new volumes and so on. But those actions must be
 Display current error states of a server (Beta).
 
 ==== `irmc_reset`
-Resets (reboots) iRMC immediatly.
+Resets (reboots) iRMC immediatly. Please that it can take some minutes to come up again.
 
 ==== `irmc_deltasks`
 Delete all tasks (Beta).

@@ -14,7 +14,7 @@ endif::[]
 = iRMCtools
 
 [.lead]
-*Tools and examples based on https://www.dmtf.org/standards/redfish[Redfish(R)] for Fujitsu iRMC*
+*Tools and examples based on https://www.dmtf.org/standards/redfish[Redfish(R)] for Fujitsu iRMC <<Redfish_API>>*
 
 Here are some scripts/examples to automate tasks regarding iRMC (integrated Remote Management Controller) of Fujitsu https://www.fujitsu.com/global/products/computing/servers/primergy/[PRIMERGY servers].
  
@@ -404,4 +404,18 @@ hostaddr:  169.254.0.1
 ----
 
 '''
+[[security]]
+== Security concerns
+Even if it is possible to enter user names and passwords via commandline parameters to all commands: This should be used only in non critical environments (e.g. for testing). Otherwise this data could be read by any other user (e.g. by `ps -ef`).
+
+The preferred and secure way to provide those critical data to the scripts is by defining those data in either `.irmc_env` file, in your `~/.profile` (or `~/.bash_profile`) file or by exporting vars in your shell (e.g. `export iRMC_CRED=_admin:mysecretpassword_`).
+
+WARNING: And of course, those files should be readable only by their owner (e.g. `chmod go-rwx .irmc_env ~/.profile`)!
+
+
+== Bibliography
+[bibliography]
+- [[[Redfish_API]]] https://support.ts.fujitsu.com/dl?ID=05f1e682-43f7-4c00-b3d3-2c2b91cdd56f[iRMC Redfish API]
+
+
 NOTE: Further links to documents / API specifications and so on can you find https://github.com/JuergenOrth/PRIMERGY[here].

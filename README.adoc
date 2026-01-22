@@ -1,5 +1,7 @@
 :author: Jürgen Orth
 :email: Juergen.Orth@fujitsu.com
+:email2: justin.langosch@Fujitsu.com 
+:maintainer: Justin Langosch
 
 :imagesdir: img/
 :toc: preamble
@@ -14,9 +16,9 @@ endif::[]
 = iRMCtools
 
 [.lead]
-*Tools and examples based on https://www.dmtf.org/standards/redfish[Redfish(R)] for Fujitsu iRMC <<Redfish_API>>*
+*Tools and examples based on https://www.dmtf.org/standards/redfish[Redfish(R)] for Fsas Technologies iRMC <<Redfish_API>>*
 
-Here are some scripts/examples to automate tasks regarding iRMC (integrated Remote Management Controller) of Fujitsu https://www.fujitsu.com/global/products/computing/servers/primergy/[PRIMERGY servers].
+Here are some scripts/examples to automate tasks regarding iRMC (integrated Remote Management Controller) of Fsas Technologies https://eu.fsastech.com/at/produkte-services/primergy-servers/[PRIMERGY servers].
  
 The number of tools/scripts will increase over time ...
 
@@ -146,13 +148,13 @@ $ irmc_cmd get Systems/0
   "@odata.id":"\/redfish\/v1\/Systems\/0",
   "@odata.type":"#ComputerSystem.v1_4_10.ComputerSystem",
   "Oem":{
-    "ts_fujitsu":{
+    "Fsas":{
       "@odata.type":"#FTSComputerSystem.v2_10_0.FTSComputerSystem",
       "FirmwareInventory":{
-        "@odata.id":"\/redfish\/v1\/Systems\/0\/Oem\/ts_fujitsu\/FirmwareInventory"
+        "@odata.id":"\/redfish\/v1\/Systems\/0\/Oem\/Fsas\/FirmwareInventory"
       },
       "MainBoard":{
-        "Manufacturer":"FUJITSU",
+        "Manufacturer":"Fsas Technologies",
         "Model":"D3890",
         "SerialNumber":"SM2137PNB00I",
 :
@@ -292,7 +294,7 @@ Change the asset tag, e.g. `chasset ASSET-No: 4711/0815`
 Change the automatic update feature for BIOS settings at boot time. When this is set to *true* (and effective after first reboot) then you can read BIOS-settings with `irmc_getprofile` w/o immediate server reset! Default value ex factory is `false`.
 
 == Toolset 2 - use remote media via CLI
-This tool (below dir `iso`) is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with this image. This can be used for OS installation as well as for applying Fujitsu Update DVD.
+This tool (below dir `iso`) is mentioned to mount an ISO image via NFS, CIFS, or HTTP as remote media in order to boot a server with this image. This can be used for OS installation as well as for applying Fsas Technologies Update DVD.
 
 ===  Config file
 
@@ -310,7 +312,7 @@ This tool (below dir `iso`) is mentioned to mount an ISO image via NFS, CIFS, or
 
 # CHANGE lines below
 iRMC=${1:-10.172.126.245} User=${2:-admin} Pw=${3:-admin}
-Uri='http://10.172.125.9/ISO/VMware-ESXi-6.7.0-14320388-Fujitsu-v480-1.iso'
+Uri='http://10.172.125.9/ISO/VMware-ESXi-6.7.0-14320388-Fsas-v480-1.iso'
 ----
 
 Set the variables `iRMC`, `User`, `Pw` and `Uri` by editing isomount.cfg. 

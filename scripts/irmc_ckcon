@@ -1,18 +1,0 @@
-#!/bin/bash
-# (c) Juergen Orth ;-)
-# $Id: irmc_ckcon 147 2022-11-25 12:31:51Z HMBJOrth $
-# for documentation see https://github.com/fujitsu/iRMCtools
-
-export PATH=$PATH:${0%/*}
-
-. ${0%/*}/.irmc_env
-
-result=$(irmc_cmd get SessionService -i | tr -d "" | head -1)
-[ "$session_token" ] && method=session_token || method="user/password"
-if [[ "$result" =~ 200\ OK ]]
-then
-	echo "Connection to $iRMC (via $method) OK"
-else
-	echo "Connection to $iRMC (via $method) not possible ($result)"
-	exit 1
-fi
